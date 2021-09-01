@@ -1,0 +1,8 @@
+build/
+public/
+**/coverage/
+**/node_modules/
+**/.next/
+**/*.min.js
+*.config.js
+.*lintrc.js”
