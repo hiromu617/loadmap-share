@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_07_152453) do
+ActiveRecord::Schema.define(version: 2021_09_07_155433) do
 
   create_table "NodeItems", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 2021_09_07_152453) do
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "uid", null: false
     t.string "name", null: false
-    t.string "bio", null: false
     t.string "profile_image"
+    t.string "bio", default: "", null: false
   end
 
 end
