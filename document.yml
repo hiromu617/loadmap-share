@@ -32,9 +32,9 @@ paths:
         - users
       summary: Get user by uid.
       description: Returns a single User model
-      parameters: # リクエストパラメータ
+      parameters:
         - name: uid
-          in: path # パラメータをパス内に含める
+          in: path
           description: uid
           required: true
           schema:
@@ -47,7 +47,7 @@ paths:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/User'
+                  $ref: '#/components/schemas/UserRes'
               example:
                 name: Richard Roe
                 bio: よろしくお願いします
@@ -78,6 +78,56 @@ paths:
                   $ref: '#/components/schemas/LoadmapRes'
               example: [{id: 1, name: "", description: "", author: {uid: 1, name: a, bio: a, profile_image: sample.com}, node_items: [{id: 1, next_id: 2, loadmap_id: 1, name: "", title: ""}]
               }]
+  /loadmaps/{loadmap_id}:
+    get:
+      tags:
+        - loadmaps
+      summary: loadmapを返す
+      description: ""
+      parameters:
+        - name: loadmap_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoadmapRes'
+              example: {
+                id: 1,
+                name: "",
+                description: "",
+                author: {uid: 1, name: a, bio: a, profile_image: sample.com},
+                node_items: [
+                  {
+                    id: 1,
+                    next_id: 2,
+                    loadmap_id: 1,
+                    name: "",
+                    title: ""
+                  }
+                  ],
+                like_count: 5,
+                comments: [
+                  {
+                    id: 1,
+                    content: "",
+                    user: {
+                      id: 1,
+                      uid: dsbgs,
+                      name: jhon,
+                      bio: "",
+                      profile_image: ""
+                    }
+                  }
+                ]
+              }
   /loadmaps/:
     post:
       tags:
@@ -88,19 +138,11 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoadmapReq'
+              $ref: '#/components/schemas/LoadmapsReq'
         required: true
       responses:
         '200':
           description: ""
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/LoadmapRes'
-              example: [{id: 1, name: "", description: "", author: {uid: 1, name: a, bio: a, profile_image: sample.com}, node_items: [{id: 1, next_id: 2, loadmap_id: 1, name: "", title: ""}]
-              }]
   /likes/:
     post:
       tags:
@@ -112,6 +154,21 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/LikeReq'
+        required: true
+      responses:
+        '200':
+          description: ""
+  /comments/:
+    post:
+      tags:
+        - comments
+      summary: loadmapにcommentするAPI
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentReq'
         required: true
       responses:
         '200':
@@ -172,6 +229,22 @@ components:
           example: 3
         description:
           type: string
+    Comment:
+      type: object
+      required:
+        - id
+        - content
+        - loadmap_id
+        - user_id
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        loadmap_id:
+          type: integer
+        user_id:
+          type: integer
     UserRes:
       type: object
       required:
@@ -213,11 +286,15 @@ components:
             $ref: '#/components/schemas/NodeItem'
         like_count:
           type: integer
+        comments:
+            type: array
+            items:
+              $ref: '#/components/schemas/Comment'
         author:
           type: object
           items:
             $ref: '#/components/schemas/User'
-    LoadmapReq:
+    LoadmapsReq:
       type: object
       properties:
         name:
@@ -243,6 +320,16 @@ components:
         loadmap_id:
           type: integer
           example: 1
+    commentReq:
+      type: object
+      properties:
+        loadmap_id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+        content:
+          type: string
 tags:
   - name: users
     description: Userに関するAPI
@@ -250,3 +337,5 @@ tags:
     description: loadmapに関するAPI
   - name: likes
     description: loadmapをlikeするAPI
+  - name: comments
+    description: commentに関するAPI
