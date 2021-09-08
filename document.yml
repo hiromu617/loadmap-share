@@ -1,0 +1,341 @@
+openapi: 3.0.2
+info:
+  title: Loadmap share(仮)
+  description: APIの仕様, timestampは省略、ユーザのUID等はfrontから受け取ったtokenからJWT認証で取得する
+  version: 1.0.0
+servers:
+  - url: https://localhost:3000/api/v1
+    description: Development server
+paths:
+  /users:
+    put:
+      tags:
+        - users
+      summary: Update a User
+      description: Update a User
+      requestBody: # リクエストボディ
+        description: user to update
+        content:
+          application/json:
+            schema: # POSTするオブジェクト
+              $ref: '#/components/schemas/User'
+            example:
+              name: Richard Roe
+              bio: よろしくお願いします
+              profile_image: "https://sample.com"
+      responses:
+        '200':
+          description: SUCCESS
+  /users/{uid}:
+    get:
+      tags:
+        - users
+      summary: Get user by uid.
+      description: Returns a single User model
+      parameters:
+        - name: uid
+          in: path
+          description: uid
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A single User model
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/UserRes'
+              example:
+                name: Richard Roe
+                bio: よろしくお願いします
+                profile_image: "https://sample.com"
+                loadmaps: [
+                  {id: 1, name: aaa, description: a,node_items: [] ,like_count: 1},
+                ]
+  /loadmaps:
+    get:
+      tags:
+        - loadmaps
+      summary: loadmap一覧を返す
+      description: クエリをつけてページネーションする
+      parameters:
+        - name: page
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoadmapRes'
+              example: [{id: 1, name: "", description: "", author: {uid: 1, name: a, bio: a, profile_image: sample.com}, node_items: [{id: 1, next_id: 2, loadmap_id: 1, name: "", title: ""}]
+              }]
+  /loadmaps/{loadmap_id}:
+    get:
+      tags:
+        - loadmaps
+      summary: loadmapを返す
+      description: ""
+      parameters:
+        - name: loadmap_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoadmapRes'
+              example: {
+                id: 1,
+                name: "",
+                description: "",
+                author: {uid: 1, name: a, bio: a, profile_image: sample.com},
+                node_items: [
+                  {
+                    id: 1,
+                    next_id: 2,
+                    loadmap_id: 1,
+                    name: "",
+                    title: ""
+                  }
+                  ],
+                like_count: 5,
+                comments: [
+                  {
+                    id: 1,
+                    content: "",
+                    user: {
+                      id: 1,
+                      uid: dsbgs,
+                      name: jhon,
+                      bio: "",
+                      profile_image: ""
+                    }
+                  }
+                ]
+              }
+  /loadmaps/:
+    post:
+      tags:
+        - loadmaps
+      summary: loadmapを作成する
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoadmapsReq'
+        required: true
+      responses:
+        '200':
+          description: ""
+  /likes/:
+    post:
+      tags:
+        - likes
+      summary: loadmapをlikeするAPI
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LikeReq'
+        required: true
+      responses:
+        '200':
+          description: ""
+  /comments/:
+    post:
+      tags:
+        - comments
+      summary: loadmapにcommentするAPI
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/commentReq'
+        required: true
+      responses:
+        '200':
+          description: ""
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - uid
+        - name
+        - bio
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uid:
+          type: string
+        profile_image:
+          type: string
+        bio:
+          type: string
+    Loadmap:
+      type: object
+      required:
+        - id
+        - name
+        - description
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+        description:
+          type: string
+    NodeItem:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - next_id
+        - loadmap_id
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+        next_id:
+          type: integer
+          example: 2
+        loadmap_id:
+          type: integer
+          example: 3
+        description:
+          type: string
+    Comment:
+      type: object
+      required:
+        - id
+        - content
+        - loadmap_id
+        - user_id
+      properties:
+        id:
+          type: integer
+        content:
+          type: string
+        loadmap_id:
+          type: integer
+        user_id:
+          type: integer
+    UserRes:
+      type: object
+      required:
+        - id
+        - uid
+        - name
+        - bio
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        uid:
+          type: string
+        profile_image:
+          type: string
+        bio:
+          type: string
+        loadmaps:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoadmapRes'
+        like_count:
+          type: integer
+    LoadmapRes:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+        description:
+          type: string
+          example: ""
+        node_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeItem'
+        like_count:
+          type: integer
+        comments:
+            type: array
+            items:
+              $ref: '#/components/schemas/Comment'
+        author:
+          type: object
+          items:
+            $ref: '#/components/schemas/User'
+    LoadmapsReq:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          example: ""
+        node_items:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeItemReq'
+    NodeItemReq:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+          example: ""
+    LikeReq:
+      type: object
+      properties:
+        loadmap_id:
+          type: integer
+          example: 1
+    commentReq:
+      type: object
+      properties:
+        loadmap_id:
+          type: integer
+          example: 1
+        user_id:
+          type: integer
+        content:
+          type: string
+tags:
+  - name: users
+    description: Userに関するAPI
+  - name: loadmaps
+    description: loadmapに関するAPI
+  - name: likes
+    description: loadmapをlikeするAPI
+  - name: comments
+    description: commentに関するAPI
