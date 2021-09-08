@@ -17,3 +17,6 @@ $ docker-compose up -d
 - [tailwindcss](https://tailwindcss.com/)
 - [SWR](https://swr.vercel.app/ja)
 - [headless UI](https://headlessui.dev/)
+
+# API document
+document.ymlを[Swagger Editor](https://editor.swagger.io/#)にコピペ
