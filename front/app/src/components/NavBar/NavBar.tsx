@@ -12,10 +12,14 @@ export const NavBar: VFC = () => {
               RoadMap
             </h1>
           </Link>
-          <div className="flex items-center gap-2">
+          <button
+            className="flex items-center gap-2"
+            type="button"
+            onClick={() => alert("open search modal")}
+          >
             <SearchIcon className="w-5 h-5 text-gray-400" />
             <p className="text-gray-400">Search</p>
-          </div>
+          </button>
         </div>
         <Link href="/user/1">
           <div className="bg-blue-500 w-10 h-10 rounded-full"></div>
