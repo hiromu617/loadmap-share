@@ -17,7 +17,7 @@ export const NavBar: VFC = () => {
             <p className="text-gray-400">Search</p>
           </div>
         </div>
-        <Link href="/about/">
+        <Link href="/user/1">
           <div className="bg-blue-500 w-10 h-10 rounded-full"></div>
         </Link>
       </div>
