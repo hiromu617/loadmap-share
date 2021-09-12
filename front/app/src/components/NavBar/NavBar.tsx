@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SearchIcon } from "@heroicons/react/solid";
 import { LoginModalContext } from "../../context/LoginModalContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { UserMenu } from "../UserMenu/UserMenu";
 
 export const NavBar: VFC = () => {
   const { setIsOpen } = useContext(LoginModalContext);
@@ -27,9 +28,7 @@ export const NavBar: VFC = () => {
           </button>
         </div>
         {currentUser ? (
-          <Link href="/user/1">
-            <div className="bg-blue-500 w-10 h-10 rounded-full"></div>
-          </Link>
+          <UserMenu currentUser={currentUser} />
         ) : (
           <button onClick={() => setIsOpen(true)}>LOGIN</button>
         )}

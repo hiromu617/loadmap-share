@@ -1,11 +1,6 @@
 import { FC, createContext, useEffect, useState } from "react";
 import { getAuth, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
-
-type User = {
-  uid: string;
-  name: string;
-  token: string;
-};
+import { User } from "../types/User";
 
 const CurrentUserContext = createContext(
   {} as {
@@ -22,8 +17,8 @@ const CurrentUserProvider: FC = ({ children }) => {
   );
 
   useEffect(() => {
-    setCurrentUser(null)
-    
+    setCurrentUser(null);
+
     const auth = getAuth();
     getRedirectResult(auth)
       .then((result) => {
