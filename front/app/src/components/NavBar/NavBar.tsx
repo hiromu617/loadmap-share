@@ -1,10 +1,13 @@
-import { VFC } from "react";
+import { VFC, useContext } from "react";
 import Link from "next/link";
 import { SearchIcon } from "@heroicons/react/solid";
+import { LoginModalContext } from "../../context/LoginModalContext";
 
 export const NavBar: VFC = () => {
+  const { setIsOpen } = useContext(LoginModalContext);
+
   return (
-    <div className="sticky top-0 bg-white dark:bg-gray-800 z-50 h-16">
+    <div className="sticky top-0 bg-white dark:bg-gray-800 z-40 h-16">
       <div className="flex justify-between h-full px-3 md:px-10 items-center border-b-2 border-gray-100 dark:border-gray-700">
         <div className="flex justify-between gap-5 md:gap-10 items-center">
           <Link href="/">
@@ -21,9 +24,10 @@ export const NavBar: VFC = () => {
             <p className="text-gray-400">Search</p>
           </button>
         </div>
-        <Link href="/user/1">
+        {/* <Link href="/user/1">
           <div className="bg-blue-500 w-10 h-10 rounded-full"></div>
-        </Link>
+        </Link> */}
+        <button onClick={() => setIsOpen(true)}>LOGIN</button>
       </div>
     </div>
   );
