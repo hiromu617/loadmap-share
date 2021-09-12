@@ -1,6 +1,7 @@
 import { VFC, useState, useContext, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { LoginModalContext } from "../../context/LoginModalContext";
+import { LoginWithGoogle } from "../../libs/firebase";
 
 export const LoginModal: VFC = () => {
   const { isOpen, setIsOpen } = useContext(LoginModalContext);
@@ -66,9 +67,9 @@ export const LoginModal: VFC = () => {
                 <button
                   type="button"
                   className="inline-flex justify-center px-4 py-2 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"
-                  onClick={closeModal}
+                  onClick={LoginWithGoogle}
                 >
-                  Login
+                  Login With Google
                 </button>
               </div>
             </div>
