@@ -7,8 +7,7 @@ import { UserMenu } from "../UserMenu/UserMenu";
 
 export const NavBar: VFC = () => {
   const { setIsOpen } = useContext(LoginModalContext);
-  const { currentUser } = useContext(CurrentUserContext);
-  console.log(currentUser)
+  const { currentUser, loading } = useContext(CurrentUserContext);
   return (
     <div className="sticky top-0 bg-white dark:bg-gray-800 z-40 h-16">
       <div className="flex justify-between h-full px-3 md:px-10 items-center border-b-2 border-gray-100 dark:border-gray-700">
@@ -27,11 +26,13 @@ export const NavBar: VFC = () => {
             <p className="text-gray-400">Search</p>
           </button>
         </div>
-        {currentUser ? (
-          <UserMenu currentUser={currentUser} />
-        ) : (
-          <button onClick={() => setIsOpen(true)}>LOGIN</button>
+        {loading && (
+          <div className="animate-pulse h-10 w-10 rounded-full bg-blue-300"></div>
         )}
+        {!loading && !currentUser && (
+          <button onClick={() => setIsOpen(true)} className="bg-blue-500 hover:bg-blue-600 text-white rounded-md px-3 py-1">Login</button>
+        )}
+        {!loading && currentUser && <UserMenu currentUser={currentUser} />}
       </div>
     </div>
   );

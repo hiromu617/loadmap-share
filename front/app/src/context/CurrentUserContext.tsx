@@ -8,6 +8,7 @@ const CurrentUserContext = createContext(
     setCurrentUser: React.Dispatch<
       React.SetStateAction<User | null | undefined>
     >;
+    loading: boolean;
   }
 );
 
@@ -15,10 +16,10 @@ const CurrentUserProvider: FC = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<User | null | undefined>(
     undefined
   );
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    setCurrentUser(null);
-
+    setLoading(true);
     const auth = getAuth();
     getRedirectResult(auth)
       .then((result) => {
@@ -29,20 +30,28 @@ const CurrentUserProvider: FC = ({ children }) => {
         // The signed-in user info.
         const user = result?.user;
         // console.log("token", token);
-        // console.log("user", user);
+        console.log("user", user);
 
-        if (user && user.displayName && token) {
+        if (user && user.displayName && token && user.photoURL) {
           setCurrentUser({
             uid: user.uid,
             name: user.displayName,
             token: token,
+            photoURL: user.photoURL,
           });
         }
+        if (!user) {
+          setCurrentUser(null);
+        }
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         // Handle Errors here.
         const errorCode = error.code;
+        console.error(errorCode);
         const errorMessage = error.message;
+        console.error(errorMessage);
         // The email of the user's account used.
         const email = error.email;
         // The AuthCredential type that was used.
@@ -54,7 +63,11 @@ const CurrentUserProvider: FC = ({ children }) => {
   /* 下階層のコンポーネントをラップする */
   return (
     <CurrentUserContext.Provider
-      value={{ currentUser: currentUser, setCurrentUser: setCurrentUser }}
+      value={{
+        currentUser: currentUser,
+        setCurrentUser: setCurrentUser,
+        loading: loading,
+      }}
     >
       {children}
     </CurrentUserContext.Provider>
