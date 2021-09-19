@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
   title: Loadmap share(仮)
   description: APIの仕様, timestampは省略、ユーザのUID等はfrontから受け取ったtokenからJWT認証で取得する
-  version: 1.0.0
+  version: 1.0.1
 servers:
   - url: https://localhost:3000/api/v1
     description: Development server
@@ -20,6 +20,7 @@ paths:
             schema: # POSTするオブジェクト
               $ref: '#/components/schemas/User'
             example:
+              uid: a
               name: Richard Roe
               bio: よろしくお願いします
               profile_image: "https://sample.com"
@@ -297,6 +298,8 @@ components:
     LoadmapsReq:
       type: object
       properties:
+        uid:
+          type: string
         name:
           type: string
         description:
@@ -317,12 +320,16 @@ components:
     LikeReq:
       type: object
       properties:
+        uid:
+          type: string
         loadmap_id:
           type: integer
           example: 1
     commentReq:
       type: object
       properties:
+        uid:
+          type: string
         loadmap_id:
           type: integer
           example: 1
