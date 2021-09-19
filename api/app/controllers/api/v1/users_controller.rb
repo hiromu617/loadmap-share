@@ -8,11 +8,11 @@ class Api::V1::UsersController < ApplicationController
       return
     end
 
-    @newUser = User.new(user_params)
-    if @newUser.save
-      render json: @newUser
+    newUser = User.new(user_params)
+    if newUser.save
+      render json: newUser
     else
-      render json: @userUser.errors, status: :unprocessable_entity
+      render json: newUser.errors, status: :unprocessable_entity
     end
   end
 
