@@ -9,7 +9,7 @@ export const NavBar: VFC = () => {
   const { setIsOpen } = useContext(LoginModalContext);
   const { currentUser, loading } = useContext(CurrentUserContext);
   return (
-    <div className="sticky top-0 bg-white dark:bg-gray-800 z-40 h-16">
+    <div className="sticky top-0 bg-white dark:bg-gray-800 z-40 h-16 shadow-md">
       <div className="flex justify-between h-full px-3 md:px-10 items-center border-b-2 border-gray-100 dark:border-gray-700">
         <div className="flex justify-between gap-5 md:gap-10 items-center">
           <Link href="/">

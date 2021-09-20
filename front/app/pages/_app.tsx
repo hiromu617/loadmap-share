@@ -12,11 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <LoginModalProvider>
         <LoginModal />
         <NavBar />
-        <div className="w-full min-h-screen dark:bg-gray-800">
-          <div className="container mx-auto px-2 xl:px-32 pt-5 h-full">
-            <Component {...pageProps} />
-          </div>
-        </div>
+        <Component {...pageProps} />
         <Footer />
       </LoginModalProvider>
     </CurrentUserProvider>
