@@ -1,4 +1,4 @@
-class Roadmaps < ActiveRecord::Migration[6.0]
+class CreateRoadmaps < ActiveRecord::Migration[6.0]
   def change
     create_table :roadmaps do |t|
       t.string :name,null: false
