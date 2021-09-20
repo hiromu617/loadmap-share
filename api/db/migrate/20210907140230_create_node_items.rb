@@ -1,6 +1,6 @@
-class NodeItem < ActiveRecord::Migration[6.0]
+class CreateNodeItems < ActiveRecord::Migration[6.0]
   def change
-    create_table :NodeItems do |t|
+    create_table :nodeItems do |t|
       t.string :name, null: false
       t.string :description,null: false
       t.integer :next_id,null: false

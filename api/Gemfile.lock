@@ -1,11 +1,3 @@
-GIT
-  remote: git://github.com/ctran/annotate_models.git
-  revision: 786394947c041f781df2ee0ea003e09452fa9dba
-  specs:
-    annotate (3.1.1)
-      activerecord (>= 3.2, < 7.0)
-      rake (>= 10.4, < 14.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -64,6 +56,9 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 14.0)
     bootsnap (1.8.1)
       msgpack (~> 1.0)
     builder (3.2.4)
@@ -161,7 +156,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  annotate!
+  annotate
   bootsnap (>= 1.4.2)
   byebug
   jbuilder
