@@ -12,7 +12,7 @@ type Props = {
 
 export const UserMenu: VFC<Props> = ({ currentUser }) => {
   const { setCurrentUser } = useContext(CurrentUserContext);
-
+  
   const handleLogout = () => {
     Logout();
     setCurrentUser(null);
@@ -44,7 +44,18 @@ export const UserMenu: VFC<Props> = ({ currentUser }) => {
                 <a
                   className={`${"text-gray-900"} text-left  w-full rounded-md  block px-2 py-2 text-md hover:bg-blue-400 hover:text-white`}
                 >
-                  Profile
+                  プロフィール
+                </a>
+              </Link>
+            )}
+          </Menu.Item>
+          <Menu.Item>
+            {({ active }) => (
+              <Link href={`/roadmap/new`}>
+                <a
+                  className={`${"text-gray-900"} text-left  w-full rounded-md  block px-2 py-2 text-md hover:bg-blue-400 hover:text-white`}
+                >
+                  ロードマップを作成する
                 </a>
               </Link>
             )}
@@ -55,7 +66,7 @@ export const UserMenu: VFC<Props> = ({ currentUser }) => {
                 className={`${"text-gray-900"} text-left w-full rounded-md  block px-2 py-2 text-md hover:bg-blue-400 hover:text-white`}
                 onClick={handleLogout}
               >
-                Logout
+                ログアウト
               </button>
             )}
           </Menu.Item>
