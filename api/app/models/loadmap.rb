@@ -1,0 +1,2 @@
+class Loadmap < ApplicationRecord
+end
