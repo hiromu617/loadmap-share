@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         get 'login', on: :collection
       end
       resources :loadmaps 
+      resources :likes
     end
   end
 end
