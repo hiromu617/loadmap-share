@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       end
       resources :loadmaps 
       resources :likes
+      resources :comments
     end
   end
 end
