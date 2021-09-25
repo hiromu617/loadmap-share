@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import Img from "../public/sample-profile-image.jpg"
+import Img from "../public/main.png";
 import styles from "../styles/Home.module.css";
 
 // TODO: roadmap一覧
@@ -17,18 +17,26 @@ const Home: NextPage = () => {
   roadMapList.push(6);
 
   return (
-    <div className="w-full h-full bg-blue-50">
+    <div className="w-full h-full bg-blue-50 pb-40">
       <div className="w-full h-96">
-        <h1 className="text-white text-7xl absolute top-52 text-center w-full z-10">Road For Tomorrow</h1>
-        <h2 className="text-white text-3xl absolute top-96 text-center w-full z-10">未来に続く道を探せ</h2>
-        <Image src={Img}/>
+        <div className="absolute top-52 text-center w-full z-20">
+          <h1 className="filter text-white text-7xl font-bold drop-shadow-xl">
+            Road For Tomorrow
+          </h1>
+          <h2 className="filter text-white text-3xl font-semibold mt-5 drop-shadow-lg">
+            未来に続く道を探せ
+          </h2>
+        </div>
+        <Image alt="Road" layout="fill" objectFit="cover" src={Img} className="z-10" />
       </div>
-      <div className="w-5/6 bg-white rounded-t-3xl py-16 px-14 mx-auto relative top-20 z-10">
-        <div className="flex bottom-auto">
-          <div className="flex items-end text-4xl p-2 text-indigo-400">
+      <div className="w-5/6 bg-white rounded-3xl py-16 mb-24 px-14 mx-auto relative z-10 top-40">
+        <div className="flex bottom-auto items-center">
+          <div className="flex items-end text-3xl p-2 text-blue-600">
             Gallery
           </div>
-          <div className="flex items-end p-2 text-gray-600">ロードマップ一覧</div>
+          <p className="ml-2 text-gray-600 text-sm">
+            ロードマップ一覧
+          </p>
         </div>
         <div className="border-solid flex flex-wrap content-center">
           {roadMapList.map((id) => (
