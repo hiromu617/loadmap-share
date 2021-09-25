@@ -2,14 +2,14 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def index
     @roadmaps = Roadmap.all
-    respond_to do |format|
-      format.json {render :index}
+    render :json
   end
 
   def show
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
-      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: @roadmap.nodeItem} 
+      node_items = @roadmap.nodeItems.order(next_id)
+      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items} 
     else
       render json: nil
     end
@@ -20,7 +20,7 @@ class Api::V1::RoadmapsController < ApplicationController
     roadmap = Roadmap.new(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id)
 
     next_id = nil
-    params[:node_items].reverse_each |node_item| do
+    params[:node_items].reverse_each do |node_item|
       new_node = NodeItem.create(name: node_item.name, description: node_item.description, roadmap_id: roadmap.id, next_id: next_id)
       next_id = new_node.id
     end
@@ -54,7 +54,6 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def roadmap_params
     params.permit(:name, :description, :uid, :node_items [:name, :description])
-
   end
 
 end
