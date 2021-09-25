@@ -1,4 +1,5 @@
 class Api::V1::RoadmapsController < ApplicationController
+  include ActionController::MimeResponds
 
   def index
     @roadmaps = Roadmap.all
@@ -7,8 +8,8 @@ class Api::V1::RoadmapsController < ApplicationController
   def show
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
-      node_items = @roadmap.nodeItems.order(next_id)
-      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items} 
+      node_items_sorted = @roadmap.nodeItems.order(:next_id)
+      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items_sorted} 
     else
       render json: nil
     end
