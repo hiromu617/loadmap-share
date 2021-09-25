@@ -14,4 +14,5 @@ class User < ApplicationRecord
   validates :profile_image, length: { maximum: 255 }
   validates :bio, length: { maximum: 255 }
   has_many :loadmaps
+  has_many :comments
 end
