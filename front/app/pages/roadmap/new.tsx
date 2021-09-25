@@ -13,8 +13,11 @@ type NodeInput = {
 type RoadMapInput = {
   name: string;
   description: string;
+  categoryName: string;
   nodes: NodeInput[];
 };
+
+const categories = ["c", "ruby", "php", "go", "unity", "java", "javascript"]
 
 const RoadMapNew: NextPage = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -44,12 +47,12 @@ const RoadMapNew: NextPage = () => {
     }
     if (!currentUser?.uid) return;
     console.log(data);
-    // TODO: POST
 
     axios.post("/api/v1/roadmaps,", {
       uid: currentUser.uid,
       name: data.name,
       description: data.description,
+      catogory_name: data.categoryName,
       node_items: data.nodes,
     })
     .then(res => console.log(res))
@@ -105,6 +108,18 @@ const RoadMapNew: NextPage = () => {
               256文字以内で入力してください
             </p>
           )}
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 text-lg font-bold text-gray-700">
+            カテゴリー
+          </label>
+          <select
+            {...register(`categoryName` as const)}
+            className="form-select p-3 block w-full mt-1 text-md leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+          >
+            <option>-</option>
+            {categories.map((category) => <option>{category}</option>)}
+          </select>
         </div>
         <div className="w-full mb-10">
           <h2 className="block mb-2 text-lg font-bold text-gray-700">ノード</h2>
