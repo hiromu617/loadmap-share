@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       resources :users do
         get 'login', on: :collection
       end
-      resources :loadmaps 
+      resources :roadmaps 
       resources :likes
       resources :comments
     end

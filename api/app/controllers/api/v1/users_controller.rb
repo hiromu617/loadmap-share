@@ -8,7 +8,7 @@ class Api::V1::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     if @user
-      render json: @user, loadmaps: @user.loadmaps
+      render json: @user, roadmaps: @user.roadmaps
     else
       render json: nil
     end
