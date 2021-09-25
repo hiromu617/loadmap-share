@@ -6,7 +6,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.find_by(uid: params[:uid])
     if @user
       render json: @user, roadmaps: @user.roadmaps
     else
