@@ -19,5 +19,5 @@ export type NodeItem = {
   next_id: number;
   loadmap_id: number;
   name: string;
-  title: string;
+  description: string;
 };
