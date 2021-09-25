@@ -15,7 +15,14 @@ class Api::V1::RoadmapsController < ApplicationController
   end
 
   def create
-    @roadmap = Roadmap.new(roadmap_params)
+    author = User.find_by(uid: params[:uid])
+    roadmap = Roadmap.new(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id)
+    
+    next_id = nil
+    params[:node_items].reverse_each |node_item| do
+      new_node = NodeItem.create(name: node_item.name, description: node_item.description, roadmap_id: roadmap.id, next_id: next_id)
+      next_id = new_node.id
+    end
 
     if @roadmap.save
       render json: @roadmap
