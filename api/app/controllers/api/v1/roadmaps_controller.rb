@@ -2,25 +2,33 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def index
     @roadmaps = Roadmap.all
-    render json: @roadmaps
+    respond_to do |format|
+      format.json {render :index}
   end
 
   def show
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
-      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: @roadmap.nodeItems} 
+      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: @roadmap.nodeItem} 
     else
       render json: nil
     end
   end
 
   def create
-    @roadmap = Roadmap.new(roadmap_params)
+    author = User.find_by(uid: params[:uid])
+    roadmap = Roadmap.new(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id)
 
-    if @roadmap.save
-      render json: @roadmap
+    next_id = nil
+    params[:node_items].reverse_each |node_item| do
+      new_node = NodeItem.create(name: node_item.name, description: node_item.description, roadmap_id: roadmap.id, next_id: next_id)
+      next_id = new_node.id
+    end
+
+    if roadmap.save
+      render json: roadmap
     else
-      render json: @roadmap.errors, status: :unprocessable_entity
+      render json: roadmap.errors, status: :unprocessable_entity
     end
     
   end
@@ -45,7 +53,8 @@ class Api::V1::RoadmapsController < ApplicationController
   private
 
   def roadmap_params
-    params.require(:roadmap).permit(:id, :name, :description)
+    params.permit(:name, :description, :uid, :node_items [:name, :description])
+
   end
 
 end
