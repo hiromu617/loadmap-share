@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   namespace 'api' do
     namespace 'v1' do
       resources :users do
-        get 'login', on: :collection
+        post 'login', on: :collection
       end
-      resources :loadmaps 
+      resources :loadmaps
       resources :likes
       resources :comments
     end

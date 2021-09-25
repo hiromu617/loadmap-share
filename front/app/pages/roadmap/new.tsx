@@ -115,7 +115,7 @@ const RoadMapNew: NextPage = () => {
           </label>
           <select
             {...register(`categoryName` as const)}
-            className="form-select p-3 block w-full mt-1 text-md leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
+            className="form-select p-3 block w-full mt-1 text-md bg-white leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
           >
             <option>-</option>
             {categories.map((category) => <option>{category}</option>)}
