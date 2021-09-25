@@ -47,8 +47,7 @@ const CurrentUserProvider: FC = ({ children }) => {
               setCurrentUser({
                 uid: res.data.uid,
                 name: res.data.name,
-                token: token,
-                photoURL: res.data.profile_image,
+                profile_image: res.data.profile_image,
               });
             })
             .catch((e) => {

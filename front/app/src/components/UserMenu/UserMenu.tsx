@@ -12,7 +12,7 @@ type Props = {
 
 export const UserMenu: VFC<Props> = ({ currentUser }) => {
   const { setCurrentUser } = useContext(CurrentUserContext);
-  
+
   const handleLogout = () => {
     Logout();
     setCurrentUser(null);
@@ -23,7 +23,7 @@ export const UserMenu: VFC<Props> = ({ currentUser }) => {
     <Menu as="div" className="relative inline-block text-left">
       <Menu.Button>
         <img
-          src={currentUser.photoURL}
+          src={currentUser.profile_image}
           alt={"profile_imgae"}
           className="rounded-full object-cover w-10 h-10"
         />
