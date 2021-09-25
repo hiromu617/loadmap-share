@@ -2,7 +2,6 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def index
     @roadmaps = Roadmap.all
-    render :json
   end
 
   def show
