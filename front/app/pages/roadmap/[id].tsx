@@ -59,7 +59,7 @@ const RoadMapId: NextPage = () => {
   const [currentNode, setCurrentNode] = useState(data.node_items[0]);
 
   return (
-    <div className="w-full min-h-screen flex bg-yellow-50">
+    <div className="w-full min-h-screen flex" style={{backgroundColor:"#EFEFE4"}}>
       <div className="w-1/2 min-h-screen p-5">
         <div className="px-10">
           <h1 className="text-xl font-semibold text-blue-800">Roadmap</h1>
