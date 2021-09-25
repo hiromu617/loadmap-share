@@ -3,6 +3,7 @@ import { useEffect, useContext } from "react";
 import { useRouter } from "next/router";
 import { CurrentUserContext } from "../../src/context/CurrentUserContext";
 import { useForm, useFieldArray } from "react-hook-form";
+import axios from "../../src/libs/axios";
 
 type NodeInput = {
   name: string;
@@ -36,13 +37,23 @@ const RoadMapNew: NextPage = () => {
     }
   }, []);
 
-  const onSubmit = (data: RoadMapInput) => {
+  const onSubmit = async (data: RoadMapInput) => {
     if (data.nodes.length === 0) {
       alert("ノードを1つ以上作成してください");
       return;
     }
+    if (!currentUser?.uid) return;
     console.log(data);
     // TODO: POST
+
+    axios.post("/api/v1/roadmaps,", {
+      uid: currentUser.uid,
+      name: data.name,
+      description: data.description,
+      node_items: data.nodes,
+    })
+    .then(res => console.log(res))
+    .catch(e => console.error(e))
   };
 
   return (
