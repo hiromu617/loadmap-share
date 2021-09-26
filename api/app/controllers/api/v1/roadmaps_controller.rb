@@ -8,7 +8,7 @@ class Api::V1::RoadmapsController < ApplicationController
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
       nodes_sorted = @roadmap.nodes.order(:id)
-      render json: {id: @roadmap.id, name: @roadmap.name, description: @roadmap.description, author: @roadmap.user, node_items: nodes_sorted}
+      render json: {id: @roadmap.id, category: @roadmap.category.name, name: @roadmap.name, description: @roadmap.description, author: @roadmap.user, node_items: nodes_sorted}
     else
       render json: nil
     end
@@ -16,7 +16,12 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def create
     author = User.find_by(uid: params[:uid])
-    roadmap = Roadmap.create(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id, category_id: 1)
+
+    category = Category.find_by(name: roadmap_params[:name])
+    if !category
+      category = Category.create(name: roadmap_params[:name])
+    end
+    roadmap = Roadmap.create(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id, category_id: category.id)
 
     # next_id = nil
     roadmap_params[:node_items].each do |node_item|
