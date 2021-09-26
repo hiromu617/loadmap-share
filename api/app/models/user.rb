@@ -9,7 +9,7 @@
 #  bio           :string(255)      default(""), not null
 #
 class User < ApplicationRecord
-  validates :uid, presence: true, length: { maximum: 20 }
+  validates :uid, presence: true, length: { maximum: 255 }
   validates :name, presence: true, length: { maximum: 20 }
   validates :profile_image, length: { maximum: 255 }
   validates :bio, length: { maximum: 255 }
