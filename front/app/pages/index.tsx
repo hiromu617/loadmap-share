@@ -46,10 +46,12 @@ const Home: NextPage = () => {
           </div>
           <p className="ml-2 text-gray-600 text-sm">ロードマップ一覧</p>
         </div>
-        <div className="border-solid flex flex-wrap content-center">
+        <div className="border-solid flex flex-wrap justify-around gap-5 mt-5">
           {roadmaps.map((roadmap: RoadMap) => (
             <RoadMapCard roadmap={roadmap} author={roadmap.author} />
           ))}
+           <div className="w-60"></div>
+           <div className="w-60"></div>
         </div>
       </div>
     </div>

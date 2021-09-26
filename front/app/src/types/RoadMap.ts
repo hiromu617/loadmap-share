@@ -5,6 +5,7 @@ export type RoadMap = {
   author: Author;
   node_items: NodeItem[];
   created_at: string;
+  category: string;
 };
 
 export type Author = {
