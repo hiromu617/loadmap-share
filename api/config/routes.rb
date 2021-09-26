@@ -5,8 +5,7 @@ Rails.application.routes.draw do
       resources :users do
         post 'login', on: :collection
       end
-      resources :roadmaps 
-        master
+      resources :roadmaps
       resources :likes
       resources :comments
     end

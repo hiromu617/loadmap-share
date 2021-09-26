@@ -12,7 +12,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const Home: NextPage = () => {
   const { data: roadmaps, error } = useSWR(`/api/v1/roadmaps`, fetcher);
-
+  
   if (!roadmaps) {
     return <h1>loading...</h1>;
   }

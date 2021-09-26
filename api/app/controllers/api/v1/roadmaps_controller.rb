@@ -9,7 +9,7 @@ class Api::V1::RoadmapsController < ApplicationController
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
       node_items_sorted = @roadmap.nodeItems.order(:next_id)
-      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items_sorted} 
+      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items_sorted}
     else
       render json: nil
     end
@@ -30,7 +30,7 @@ class Api::V1::RoadmapsController < ApplicationController
     else
       render json: roadmap.errors, status: :unprocessable_entity
     end
-    
+
   end
 
   def destroy
@@ -40,7 +40,7 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def update
     @roadmap = Roadmap.find(params[:id])
-    if !@roadmap 
+    if !@roadmap
       return
     end
     if @roadmap.update(roadmap_params)
