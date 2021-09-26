@@ -4,19 +4,21 @@ import Image from "next/image";
 import { useState, useContext } from "react";
 import styles from "../styles/Home.module.css";
 import { CurrentUserContext } from "../../src/context/CurrentUserContext";
-import router from "next/router";
+import { useRouter } from "next/router";
 import axios from "../../src/libs/axios";
 import useSWR from "swr";
 import { RoadMapCard } from "../../src/components/RoadMapCard/RoadMapCard";
 import { RoadMap } from "../../src/types/RoadMap";
 
-const fetcher = (url: string) => axios.get(url).then((res) => {
-  console.log(res.data)
-  return res.data
-});
+const fetcher = (url: string) =>
+  axios.get(url).then((res) => {
+    console.log(res.data);
+    return res.data;
+  });
 
 // TODO: profile
 const UserId: NextPage = () => {
+  const router = useRouter();
   const { id } = router.query;
   const { data, error } = useSWR(`/api/v1/users/${id}.json`, fetcher);
 

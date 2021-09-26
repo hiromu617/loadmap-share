@@ -4,7 +4,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/solid";
-import router from "next/router";
+import { useRouter } from "next/router";
 import axios from "../../src/libs/axios";
 import useSWR from "swr";
 import { NodeItem } from "../../src/types/RoadMap";
@@ -68,6 +68,7 @@ const fetcher = (url: string) =>
   });
 
 const RoadMapId: NextPage = () => {
+  const router = useRouter();
   const { id } = router.query;
   const { data: roadmap, error } = useSWR(`/api/v1/roadmaps/${id}`, fetcher);
   const [currentNode, setCurrentNode] = useState<NodeItem | null>(null);
