@@ -13,7 +13,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 // TODO: profile
 const UserId: NextPage = () => {
   const { id } = router.query;
-  const { data: user, error } = useSWR(`/api/v1/user/${id}`, fetcher);
+  const { data , error } = useSWR(`/api/v1/users/${id}`, fetcher);
 
   //この変数でタブ切り替え
   const [openProfile, setOpenProfile] = useState(true);
@@ -36,7 +36,7 @@ const UserId: NextPage = () => {
   const profileStyle = openProfile ? focused : outOfFocus;
   const roadMapStyle = openRoadMap ? focused : outOfFocus;
 
-  if (!user) {
+  if (!data) {
     return <h1>loading...</h1>;
   }
 
@@ -56,13 +56,13 @@ const UserId: NextPage = () => {
         <div className="border-solid border-2 rounded-md p-10">
           <div className="flex relative bottom-0 left-10">
             <img
-              src={user.profile_image}
+              src={data.user.profile_image}
               alt={"profile_imgae"}
               className="rounded-full object-cover w-22 h-22 flex items-center m-5"
             />
             <div className="flex-col">
               <div className="flex items-center text-gray-600 text-3xl m-5">
-                {user.name}
+                {data.user.name}
               </div>
               <div className="flex gap-3">
                 <Image
@@ -94,14 +94,8 @@ const UserId: NextPage = () => {
             <div className="m-5">
               <div className="text-2xl underline text-gray-600">自己紹介</div>
               <div className="text-gray-600">
-                {user.bio}
+                {data.user.bio}
               </div>
-            </div>
-            <div className="m-5">
-              <div className="text-2xl underline text-gray-600">
-                ポートフォリオ
-              </div>
-              <div className="text-gray-600">github.com</div>
             </div>
             <div className="m-5">
               <div className="text-2xl underline text-gray-600">
