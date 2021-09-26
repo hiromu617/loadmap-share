@@ -10,12 +10,15 @@ import useSWR from "swr";
 import { RoadMapCard } from "../../src/components/RoadMapCard/RoadMapCard";
 import { RoadMap } from "../../src/types/RoadMap";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => {
+  console.log(res.data)
+  return res.data
+});
 
 // TODO: profile
 const UserId: NextPage = () => {
   const { id } = router.query;
-  const { data, error } = useSWR(`/api/v1/users/${id}`, fetcher);
+  const { data, error } = useSWR(`/api/v1/users/${id}.json`, fetcher);
 
   //この変数でタブ切り替え
   const [openProfile, setOpenProfile] = useState(true);
@@ -101,10 +104,12 @@ const UserId: NextPage = () => {
               <div className="text-2xl underline text-gray-600">
                 ロードマップ
               </div>
-              <div className="text-gray-600 w-full flex flex-wrap content-center">
+              <div className="text-gray-600 w-full flex flex-wrap justify-around gap-5 mt-5">
                 {data.roadmaps.map((roadmap: RoadMap) => (
                   <RoadMapCard roadmap={roadmap} author={data.user} />
                 ))}
+                <div className="w-60"></div>
+                <div className="w-60"></div>
               </div>
             </div>
           </div>

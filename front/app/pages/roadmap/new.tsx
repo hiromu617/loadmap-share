@@ -17,7 +17,7 @@ type RoadMapInput = {
   nodes: NodeInput[];
 };
 
-const categories = ["frontend", "backend", "native", "movie"]
+const categories = ["frontend", "backend", "native", "movie", "game"]
 
 const RoadMapNew: NextPage = () => {
   const { currentUser } = useContext(CurrentUserContext);
@@ -52,7 +52,7 @@ const RoadMapNew: NextPage = () => {
       uid: currentUser.uid,
       name: data.name,
       description: data.description,
-      catogory_name: data.categoryName,
+      category_name: data.categoryName,
       node_items: data.nodes,
     })
     .then(res => {
@@ -121,7 +121,6 @@ const RoadMapNew: NextPage = () => {
             {...register(`categoryName` as const)}
             className="form-select p-3 block w-full mt-1 text-md bg-white leading-tight text-gray-700 border rounded shadow focus:outline-none focus:shadow-outline"
           >
-            <option>-</option>
             {categories.map((category) => <option>{category}</option>)}
           </select>
         </div>

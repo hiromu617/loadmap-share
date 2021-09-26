@@ -1,6 +1,6 @@
 json.array! @roadmaps do |roadmap|
   json.id roadmap.id
-  json.category roadmap.categoy.name
+  json.category roadmap.category.name
   json.name roadmap.name
   json.description roadmap.description
   json.author do
