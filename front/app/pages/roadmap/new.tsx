@@ -17,7 +17,7 @@ type RoadMapInput = {
   nodes: NodeInput[];
 };
 
-const categories = ["c", "ruby", "php", "go", "unity", "java", "javascript"]
+const categories = ["frontend", "backend", "native", "movie"]
 
 const RoadMapNew: NextPage = () => {
   const { currentUser } = useContext(CurrentUserContext);
