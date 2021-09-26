@@ -6,7 +6,8 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by(uid: params[:uid])
+    # TODO: params config
+    @user = User.find_by(uid: params[:id])
     if @user
       render json: {user: @user, roadmaps: @user.roadmaps}
     else
@@ -23,8 +24,8 @@ class Api::V1::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if !@user 
-      return 
+    if !@user
+      return
     end
     if @user.update(user_params)
       render json: @user

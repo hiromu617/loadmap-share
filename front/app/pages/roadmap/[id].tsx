@@ -5,7 +5,7 @@ import Image from "next/image";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/solid";
 import router from "next/router";
-import axios from "../../src/libs/axios"
+import axios from "../../src/libs/axios";
 import useSWR from "swr";
 import { NodeItem } from "../../src/types/RoadMap";
 
@@ -59,12 +59,17 @@ import { NodeItem } from "../../src/types/RoadMap";
 //   ],
 // };
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+const fetcher = (url: string) =>
+  axios.get(url).then((res) => {
+    console.log(res);
+    return res.data;
+  });
 
 const RoadMapId: NextPage = () => {
   const { id } = router.query;
-  const { data: roadmap, error } = useSWR(`/api/v1/roadmap/${id}`, fetcher);
-  const [currentNode, setCurrentNode] = useState<NodeItem>(roadmap.node_items[0]);
+  const { data: roadmap, error } = useSWR(`/api/v1/roadmaps/${id}`, fetcher);
+  const [currentNode, setCurrentNode] = useState<NodeItem | null>(null);
+  console.log(roadmap);
 
   if (!roadmap) {
     return <h1>loading...</h1>;
@@ -100,7 +105,7 @@ const RoadMapId: NextPage = () => {
                 onClick={() => setCurrentNode(node)}
                 key={node.id}
                 className={`z-10 relative w-40 h-40 ${
-                  currentNode.id === node.id
+                  currentNode?.id === node.id
                     ? "bg-blue-500 text-white"
                     : "bg-white text-gray-800"
                 } rounded-full border-2 shadow-lg inline-flex items-center justify-center text-center p-2 hover:bg-blue-400 hover:text-white hover:shadow-2xl`}
@@ -112,14 +117,16 @@ const RoadMapId: NextPage = () => {
         </div>
       </div>
       <div className="w-1/2 min-h-screen overflow-y-scroll p-10 bg-blue-50">
-        <div className="fixed z-10 left-3/5 bg-white w-2/5 h-auto p-5 shadow-xl rounded-md">
-          <div className="py-3">
-            <h3 className="text-xl font-semibold">{currentNode.name}</h3>
+        {currentNode && (
+          <div className="fixed z-10 left-3/5 bg-white w-2/5 h-auto p-5 shadow-xl rounded-md">
+            <div className="py-3">
+              <h3 className="text-xl font-semibold">{currentNode.name}</h3>
+            </div>
+            <div className="py-5">
+              <p className="text-gray-700">{currentNode.description}</p>
+            </div>
           </div>
-          <div className="py-5">
-            <p className="text-gray-700">{currentNode.description}</p>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
