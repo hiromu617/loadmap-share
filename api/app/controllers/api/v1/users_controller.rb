@@ -9,7 +9,8 @@ class Api::V1::UsersController < ApplicationController
     # TODO: params config
     @user = User.find_by(uid: params[:id])
     if @user
-      render json: {user: @user, roadmaps: @user.roadmaps.order(id: "DESC")}
+      @roadmaps = @user.roadmaps.order(id: "DESC")
+      render :formats => :json
     else
       render json: nil
     end
