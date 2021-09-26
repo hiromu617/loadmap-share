@@ -48,14 +48,18 @@ const RoadMapNew: NextPage = () => {
     if (!currentUser?.uid) return;
     console.log(data);
 
-    axios.post("/api/v1/roadmaps,", {
+    axios.post("/api/v1/roadmaps", {
       uid: currentUser.uid,
       name: data.name,
       description: data.description,
       catogory_name: data.categoryName,
       node_items: data.nodes,
     })
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      alert("ロードマップを投稿しました")
+      router.push('/')
+    })
     .catch(e => console.error(e))
   };
 
