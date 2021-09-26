@@ -9,6 +9,7 @@ import axios from "../../src/libs/axios";
 import useSWR from "swr";
 import { NodeItem } from "../../src/types/RoadMap";
 import Link from "next/link";
+import Linkify from "react-linkify";
 
 // const data = {
 //   id: 1,
@@ -131,9 +132,9 @@ const RoadMapId: NextPage = () => {
             <div className="py-3">
               <h3 className="text-xl font-semibold">{currentNode.name}</h3>
             </div>
-            <div className="py-5">
-              <p className="text-gray-700">{currentNode.description}</p>
-            </div>
+            <p className="py-5">
+              <Linkify>{currentNode.description}</Linkify>
+            </p>
           </div>
         )}
       </div>

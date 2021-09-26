@@ -24,10 +24,10 @@ const Home: NextPage = () => {
     <div className="w-full h-full bg-blue-50 pb-40">
       <div className="w-full h-96">
         <div className="absolute top-52 text-center w-full z-20">
-          <h1 className="filter text-white text-7xl font-bold drop-shadow-xl">
+          <h1 className="filter text-gray-800 text-7xl font-bold drop-shadow-xl">
             Road For Tomorrow
           </h1>
-          <h2 className="filter text-white text-3xl font-semibold mt-5 drop-shadow-lg">
+          <h2 className="filter text-gray-700 text-3xl font-semibold mt-5 drop-shadow-lg">
             未来に続く道を探せ
           </h2>
         </div>
