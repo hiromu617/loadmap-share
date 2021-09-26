@@ -17,7 +17,7 @@ class Api::V1::RoadmapsController < ApplicationController
   def create
     author = User.find_by(uid: params[:uid])
 
-    category = Category.find_by(name: roadmap_params[:name])
+    category = Category.find_by(name: roadmap_params[:category_name])
     if !category
       category = Category.create(name: roadmap_params[:name])
     end
