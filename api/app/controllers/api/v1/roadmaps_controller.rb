@@ -1,5 +1,4 @@
 class Api::V1::RoadmapsController < ApplicationController
-  include ActionController::MimeResponds
 
   def index
     @roadmaps = Roadmap.all
@@ -8,7 +7,7 @@ class Api::V1::RoadmapsController < ApplicationController
   def show
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
-      node_items_sorted = @roadmap.nodeItems.order(:next_id)
+      nodes_sorted = @roadmap.nodes.order(:id)
       render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items_sorted}
     else
       render json: nil
@@ -17,19 +16,15 @@ class Api::V1::RoadmapsController < ApplicationController
 
   def create
     author = User.find_by(uid: params[:uid])
-    roadmap = Roadmap.new(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id)
+    roadmap = Roadmap.create(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id, category_id: 1)
 
-    next_id = nil
-    params[:node_items].reverse_each do |node_item|
-      new_node = NodeItem.create(name: node_item.name, description: node_item.description, roadmap_id: roadmap.id, next_id: next_id)
-      next_id = new_node.id
+    # next_id = nil
+    roadmap_params[:node_items].each do |node_item|
+      new_node = Node.create(name: node_item[:name], description: node_item[:description], roadmap_id: roadmap.id)
+      # next_id = new_node.id
     end
 
-    if roadmap.save
-      render json: roadmap
-    else
-      render json: roadmap.errors, status: :unprocessable_entity
-    end
+    render json: roadmap
 
   end
 
@@ -52,8 +47,7 @@ class Api::V1::RoadmapsController < ApplicationController
 
   private
 
-  def roadmap_params
-    params.permit(:name, :description, :uid, :node_items [:name, :description])
-  end
-
+    def roadmap_params
+      params.permit(:name, :description, :uid, :category_name, node_items: [:name, :description])
+    end
 end

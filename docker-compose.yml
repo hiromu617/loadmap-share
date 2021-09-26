@@ -24,6 +24,8 @@ services:
     volumes:
       - ./api:/app
     command: rails server -b 0.0.0.0
+    stdin_open: true
+    tty: true
   front:
     build:
       context: ./front/

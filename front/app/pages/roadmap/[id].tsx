@@ -63,7 +63,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const RoadMapId: NextPage = () => {
   const { id } = router.query;
-  const { data: roadmap, error } = useSWR(`/api/v1/roadmap/${id}`, fetcher);
+  const { data: roadmap, error } = useSWR(`/api/v1/roadmaps/${id}`, fetcher);
   const [currentNode, setCurrentNode] = useState<NodeItem>(roadmap.node_items[0]);
 
   if (!roadmap) {

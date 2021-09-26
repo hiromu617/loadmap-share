@@ -48,7 +48,7 @@ const RoadMapNew: NextPage = () => {
     if (!currentUser?.uid) return;
     console.log(data);
 
-    axios.post("/api/v1/roadmaps,", {
+    axios.post("/api/v1/roadmaps", {
       uid: currentUser.uid,
       name: data.name,
       description: data.description,

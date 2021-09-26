@@ -9,6 +9,6 @@ json.array! @roadmaps do |roadmap|
     json.profile_image roadmap.user.profile_image
   end
   json.node_items do
-    json.array! roadmap.node_items, :id, :next_id, :roadmap_id, :name, :title
+    json.array! roadmap.nodes, :id, :next_id, :roadmap_id, :name, :description
   end
 end
