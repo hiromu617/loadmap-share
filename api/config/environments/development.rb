@@ -46,6 +46,10 @@ Rails.application.configure do
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
 
+  #https://qiita.com/ryota-0906/items/55c6204532988aa73c82 に従って追記
+  config.hosts.clear
+
+
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
