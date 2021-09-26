@@ -1,4 +1,4 @@
 class Like < ApplicationRecord
-    belongs_to :loadmaps
+    belongs_to :roadmaps
     belongs_to :users
 end
