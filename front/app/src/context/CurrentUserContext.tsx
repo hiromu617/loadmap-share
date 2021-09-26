@@ -1,6 +1,7 @@
 import { FC, createContext, useEffect, useState } from "react";
 import { getAuth, getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import { User } from "../types/User";
+import axios from "../libs/axios";
 
 const CurrentUserContext = createContext(
   {} as {
@@ -33,12 +34,25 @@ const CurrentUserProvider: FC = ({ children }) => {
         console.log("user", user);
 
         if (user && user.displayName && token && user.photoURL) {
-          setCurrentUser({
-            uid: user.uid,
-            name: user.displayName,
-            token: token,
-            photoURL: user.photoURL,
-          });
+          axios
+            .post("/api/v1/users/login", {
+              user: {
+                name: user.displayName,
+                uid: user.uid,
+                profile_image: user.photoURL,
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              setCurrentUser({
+                uid: res.data.uid,
+                name: res.data.name,
+                profile_image: res.data.profile_image,
+              });
+            })
+            .catch((e) => {
+              console.error(e);
+            });
         }
         if (!user) {
           setCurrentUser(null);

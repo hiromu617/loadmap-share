@@ -4,9 +4,17 @@ import Image from "next/image";
 import { useState, useContext } from "react";
 import styles from "../styles/Home.module.css";
 import { CurrentUserContext } from "../../src/context/CurrentUserContext";
+import router from "next/router";
+import axios from "../../src/libs/axios"
+import useSWR from "swr";
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 // TODO: profile
 const UserId: NextPage = () => {
+  const { id } = router.query;
+  const { data: user, error } = useSWR(`/api/v1/user/${id}`, fetcher);
+
   //この変数でタブ切り替え
   const [openProfile, setOpenProfile] = useState(true);
   const [openRoadMap, setOpenRoadMap] = useState(false);
@@ -28,6 +36,14 @@ const UserId: NextPage = () => {
   const profileStyle = openProfile ? focused : outOfFocus;
   const roadMapStyle = openRoadMap ? focused : outOfFocus;
 
+  if (!user) {
+    return <h1>loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>An error occured</h1>;
+  }
+
   return (
     <div className="w-full min-h-screen dark:bg-gray-800">
       <div className="container mx-auto px-2 xl:px-32 pt-5 h-full">
@@ -40,15 +56,15 @@ const UserId: NextPage = () => {
         <div className="border-solid border-2 rounded-md p-10">
           <div className="flex relative bottom-0 left-10">
             <img
-              src={currentUser?.photoURL}
+              src={user.profile_image}
               alt={"profile_imgae"}
               className="rounded-full object-cover w-22 h-22 flex items-center m-5"
             />
             <div className="flex-col">
               <div className="flex items-center text-gray-600 text-3xl m-5">
-                {currentUser?.name}
+                {user.name}
               </div>
-              <div className="flex">
+              <div className="flex gap-3">
                 <Image
                   className="flex items-center"
                   src="/images/twitter_icon.png"
@@ -78,9 +94,7 @@ const UserId: NextPage = () => {
             <div className="m-5">
               <div className="text-2xl underline text-gray-600">自己紹介</div>
               <div className="text-gray-600">
-                こんにちは、エンジニアのhiromuです。
-                簡単に私の経歴を紹介します。私は岐阜県出身、現在は京都大学工学部地球工学科で勉強をしている大学生です。大学では主に地球温暖化の進行とそれが与える地球環境への負荷について研究しています。また研究とは別でバックエンドエンジニアとして企画構想・設計・開発・保守運用まで幅広く仕事をしています。
-                〇〇〇〇〇〇が得意です。
+                {user.bio}
               </div>
             </div>
             <div className="m-5">

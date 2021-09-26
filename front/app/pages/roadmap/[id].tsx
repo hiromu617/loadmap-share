@@ -4,71 +4,90 @@ import Head from "next/head";
 import Image from "next/image";
 import { HeartIcon as OutlineHeartIcon } from "@heroicons/react/outline";
 import { HeartIcon as SolidHeartIcon } from "@heroicons/react/solid";
+import router from "next/router";
+import axios from "../../src/libs/axios"
+import useSWR from "swr";
+import { NodeItem } from "../../src/types/RoadMap";
 
-const data = {
-  id: 1,
-  name: "Unity実践入門～環境構築から",
-  description: "unityに入門してから習得するまでのロードマップ",
-  author: {
-    uid: 1,
-    name: "ryunosuke",
-    bio: "ryunosukeです",
-    profile_image: "sample.com",
-  },
-  node_items: [
-    {
-      id: 1,
-      next_id: 2,
-      loadmap_id: 1,
-      name: "Unityチュートリアル",
-      description: "unityチュートリアルでunityの基本を学びます",
-    },
-    {
-      id: 2,
-      next_id: 3,
-      loadmap_id: 1,
-      name: "Unityの教科書",
-      description:
-        "Unityを初めて2,3か月経過後、「Unityの教科書」をテキストにした勉強を開始しました。Unity公式チュートリアルでは環境構築を終わらせ、簡単なブロック崩しゲームをつくることでUnity特有の3Dの操作には慣れてきました。「Unityの教科書」では3Dゲームの作り方を復習するとともに、2Dゲームの作り方を勉強しました。このテキストで学んだことは以下の点です。・RigidBodyによる衝突判定 ・スクリプトによるゲームの制御・AudioSourceの使い方 ・Animationの使い方主にUnity公式チュートリアルでは詳しく説明されていなかったコンポーネントのつけ方を学べる良テキストでした。さらにこの時期に参考にした記事を追加します・RigidBodyによる衝突判定",
-    },
-    {
-      id: 3,
-      next_id: null,
-      loadmap_id: 1,
-      name: "独習C#",
-      description: "独習C#でC#について詳しく勉強します",
-    },
-  ],
-  like_count: 5,
-  comments: [
-    {
-      id: 1,
-      content: "",
-      user: {
-        id: 1,
-        uid: "dsbgs",
-        name: "jhon",
-        bio: "",
-        profile_image: "",
-      },
-    },
-  ],
-};
+// const data = {
+//   id: 1,
+//   name: "Unity実践入門～環境構築から",
+//   description: "unityに入門してから習得するまでのロードマップ",
+//   author: {
+//     uid: 1,
+//     name: "ryunosuke",
+//     bio: "ryunosukeです",
+//     profile_image: "sample.com",
+//   },
+//   node_items: [
+//     {
+//       id: 1,
+//       next_id: 2,
+//       loadmap_id: 1,
+//       name: "Unityチュートリアル",
+//       description: "unityチュートリアルでunityの基本を学びます",
+//     },
+//     {
+//       id: 2,
+//       next_id: 3,
+//       loadmap_id: 1,
+//       name: "Unityの教科書",
+//       description:
+//         "Unityを初めて2,3か月経過後、「Unityの教科書」をテキストにした勉強を開始しました。Unity公式チュートリアルでは環境構築を終わらせ、簡単なブロック崩しゲームをつくることでUnity特有の3Dの操作には慣れてきました。「Unityの教科書」では3Dゲームの作り方を復習するとともに、2Dゲームの作り方を勉強しました。このテキストで学んだことは以下の点です。・RigidBodyによる衝突判定 ・スクリプトによるゲームの制御・AudioSourceの使い方 ・Animationの使い方主にUnity公式チュートリアルでは詳しく説明されていなかったコンポーネントのつけ方を学べる良テキストでした。さらにこの時期に参考にした記事を追加します・RigidBodyによる衝突判定",
+//     },
+//     {
+//       id: 3,
+//       next_id: null,
+//       loadmap_id: 1,
+//       name: "独習C#",
+//       description: "独習C#でC#について詳しく勉強します",
+//     },
+//   ],
+//   like_count: 5,
+//   comments: [
+//     {
+//       id: 1,
+//       content: "",
+//       user: {
+//         id: 1,
+//         uid: "dsbgs",
+//         name: "jhon",
+//         bio: "",
+//         profile_image: "",
+//       },
+//     },
+//   ],
+// };
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 const RoadMapId: NextPage = () => {
-  const [currentNode, setCurrentNode] = useState(data.node_items[0]);
+  const { id } = router.query;
+  const { data: roadmap, error } = useSWR(`/api/v1/roadmap/${id}`, fetcher);
+  const [currentNode, setCurrentNode] = useState<NodeItem>(roadmap.node_items[0]);
+
+  if (!roadmap) {
+    return <h1>loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>An error occured</h1>;
+  }
 
   return (
-    <div className="w-full min-h-screen flex" style={{backgroundColor:"#EFEFE4"}}>
+    <div
+      className="w-full min-h-screen flex"
+      style={{ backgroundColor: "#EFEFE4" }}
+    >
       <div className="w-1/2 min-h-screen p-5">
         <div className="px-10">
           <h1 className="text-xl font-semibold text-blue-800">Roadmap</h1>
           <div className="m-auto py-5 px-10">
-            <h2 className="text-xl text-blue-800">{data.name}</h2>
-            <p className="text-md text-gray-800 my-3">{data.description}</p>
+            <h2 className="text-xl text-blue-800">{roadmap.name}</h2>
+            <p className="text-md text-gray-800 my-3">{roadmap.description}</p>
             <div className="flex items-center gap-3 w-full text-left my-3">
               <div className="bg-gray-400 w-8 h-8 rounded-full"></div>
-              <p>{data.author.name}</p>
+              <p>{roadmap.author.name}</p>
               <div className="flex items-center gap-1">
                 <OutlineHeartIcon className="w-5 h-5 text-gray-400" />
                 <span className="text-gray-500">120</span>
@@ -76,7 +95,7 @@ const RoadMapId: NextPage = () => {
             </div>
           </div>
           <div className="w-full flex flex-col justify-center items-center gap-8">
-            {data.node_items.map((node) => (
+            {roadmap.node_items.map((node: NodeItem) => (
               <div
                 onClick={() => setCurrentNode(node)}
                 key={node.id}

@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   namespace 'api', {format: 'json'} do
     namespace 'v1' do
       resources :users do
-        get 'login', on: :collection
+        post 'login', on: :collection
       end
       resources :roadmaps 
+        master
       resources :likes
       resources :comments
     end
