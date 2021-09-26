@@ -5,15 +5,17 @@ import { useState, useContext } from "react";
 import styles from "../styles/Home.module.css";
 import { CurrentUserContext } from "../../src/context/CurrentUserContext";
 import router from "next/router";
-import axios from "../../src/libs/axios"
+import axios from "../../src/libs/axios";
 import useSWR from "swr";
+import { RoadMapCard } from "../../src/components/RoadMapCard/RoadMapCard";
+import { RoadMap } from "../../src/types/RoadMap";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 // TODO: profile
 const UserId: NextPage = () => {
   const { id } = router.query;
-  const { data , error } = useSWR(`/api/v1/users/${id}`, fetcher);
+  const { data, error } = useSWR(`/api/v1/users/${id}`, fetcher);
 
   //この変数でタブ切り替え
   const [openProfile, setOpenProfile] = useState(true);
@@ -93,15 +95,17 @@ const UserId: NextPage = () => {
           <div className="m-10">
             <div className="m-5">
               <div className="text-2xl underline text-gray-600">自己紹介</div>
-              <div className="text-gray-600">
-                {data.user.bio}
-              </div>
+              <div className="text-gray-600">{data.user.bio}</div>
             </div>
             <div className="m-5">
               <div className="text-2xl underline text-gray-600">
                 ロードマップ
               </div>
-              <div className="text-gray-600">ここにロードマップを取得</div>
+              <div className="text-gray-600 w-full flex">
+                {data.roadmaps.map((roadmap: RoadMap) => (
+                  <RoadMapCard roadmap={roadmap} author={data.user} />
+                ))}
+              </div>
             </div>
           </div>
         </div>

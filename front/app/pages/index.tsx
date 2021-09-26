@@ -1,12 +1,11 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import Link from "next/link";
 import Img from "../public/main.png";
-import styles from "../styles/Home.module.css";
 import useSWR from "swr";
 import axios from "../src/libs/axios";
 import { RoadMap } from "../src/types/RoadMap";
+import { RoadMapCard } from "../src/components/RoadMapCard/RoadMapCard";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
@@ -49,34 +48,7 @@ const Home: NextPage = () => {
         </div>
         <div className="border-solid flex flex-wrap content-center">
           {roadmaps.map((roadmap: RoadMap) => (
-            <Link key={roadmap.id} href={`/roadmap/${roadmap.id}`}>
-              <div className="w-1/3">
-                <div className="bg-white shadow-lg rounded-md mb-10 m-5 p-5">
-                  <div className="font-bold text-gray-600">{roadmap.name}</div>
-                  <div className="m-2 text-gray-600 ">
-                    {roadmap.description}
-                  </div>
-                  <div className="flex right-0">
-                    <img
-                      src={roadmap.author.profile_image}
-                      alt={"profile_imgae"}
-                      className="rounded-full object-cover w-10 h-10"
-                    />
-                    <div className="flex items text-gray-600 ">
-                      {roadmap.author.name}
-                    </div>
-                    <div className="flex items">
-                      <div>
-                        <div className="text-gray-600 ">120</div>
-                        <div className="text-gray-600 ">
-                          {roadmap.created_at}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Link>
+            <RoadMapCard roadmap={roadmap} author={roadmap.author} />
           ))}
         </div>
       </div>
