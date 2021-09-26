@@ -19,7 +19,7 @@ class Api::V1::RoadmapsController < ApplicationController
 
     category = Category.find_by(name: roadmap_params[:category_name])
     if !category
-      category = Category.create(name: roadmap_params[:name])
+      category = Category.create(name: roadmap_params[:category_name])
     end
     roadmap = Roadmap.create(name: roadmap_params[:name], description: roadmap_params[:description], user_id: author.id, category_id: category.id)
 
