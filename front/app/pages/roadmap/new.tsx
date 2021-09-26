@@ -55,7 +55,11 @@ const RoadMapNew: NextPage = () => {
       catogory_name: data.categoryName,
       node_items: data.nodes,
     })
-    .then(res => console.log(res))
+    .then(res => {
+      console.log(res)
+      alert("ロードマップを投稿しました")
+      router.push('/')
+    })
     .catch(e => console.error(e))
   };
 

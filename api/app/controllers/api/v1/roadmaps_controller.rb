@@ -1,14 +1,14 @@
 class Api::V1::RoadmapsController < ApplicationController
 
   def index
-    @roadmaps = Roadmap.all
+    @roadmaps = Roadmap.all.order(id: "DESC")
   end
 
   def show
     @roadmap = Roadmap.find(params[:id])
     if @roadmap
       nodes_sorted = @roadmap.nodes.order(:id)
-      render json: {id: @roadmap.id, name: @roadmap.name, author: @roadmap.user, node_items: node_items_sorted}
+      render json: {id: @roadmap.id, name: @roadmap.name, description: @roadmap.description, author: @roadmap.user, node_items: nodes_sorted}
     else
       render json: nil
     end
