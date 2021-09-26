@@ -49,11 +49,11 @@ const UserId: NextPage = () => {
   return (
     <div className="w-full min-h-screen dark:bg-gray-800">
       <div className="container mx-auto px-2 xl:px-32 pt-5 h-full">
-        <div className="flex bottom-auto">
-          <div className="flex items-end text-4xl p-2 text-indigo-400">
+        <div className="flex bottom-auto items-center">
+          <div className="flex items-end text-3xl p-2 text-blue-600">
             Profile
           </div>
-          <div className="flex items-end p-2 text-gray-600">プロフィール</div>
+          <p className="ml-2 text-gray-600 text-sm">プロフィール</p>
         </div>
         <div className="border-solid border-2 rounded-md p-10">
           <div className="flex relative bottom-0 left-10">
