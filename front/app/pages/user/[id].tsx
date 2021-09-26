@@ -101,7 +101,7 @@ const UserId: NextPage = () => {
               <div className="text-2xl underline text-gray-600">
                 ロードマップ
               </div>
-              <div className="text-gray-600 w-full flex">
+              <div className="text-gray-600 w-full flex flex-wrap content-center">
                 {data.roadmaps.map((roadmap: RoadMap) => (
                   <RoadMapCard roadmap={roadmap} author={data.user} />
                 ))}
