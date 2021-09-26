@@ -4,7 +4,7 @@ ENV LANG=C.UTF-8 \
   TZ=Asia/Tokyo
 
 WORKDIR /app
-RUN apt-get update -qq && apt-get install -y nodejs default-mysql-client
+RUN apt-get update -qq && apt-get install -y nodejs default-mysql-client &&&& curl https://cli-assets.heroku.com/install.sh | sh
 COPY Gemfile /app/Gemfile
 COPY Gemfile.lock /app/Gemfile.lock
 RUN bundle install
