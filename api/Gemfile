@@ -5,8 +5,8 @@ ruby '3.0.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.0.4', '>= 6.0.4.1'
-# Use mysql as the database for Active Record
-gem 'mysql2', '>= 0.4.4'
+# # Use mysql as the database for Active Record
+# gem 'mysql2', '>= 0.4.4'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
@@ -34,9 +34,9 @@ group :development, :test do
   gem 'annotate'
 end
 
-# group :production do
-#   gem 'pg', '1.1.4'
-# end
+group :production do
+  gem 'pg', '1.1.4'
+end
 
 group :development do
   gem 'listen', '~> 3.2'
